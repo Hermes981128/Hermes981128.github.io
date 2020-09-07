@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>定时发送时间戳</title>
+    <link rel="icon" type="image/x-icon" href="https://hermes981128.oss-cn-shanghai.aliyuncs.com/meetrainbow.ico"/>
+
+</head>
+<body>
+
+<script>
+    function post() {
+        let Http=new XMLHttpRequest()
+        let url = window.location.href
+        Http.open('post',url,true)
+        let time_stamp=new Date().getTime()
+        let formData = new FormData();
+        formData.append("time_stamp", time_stamp);
+        Http.send(formData)
+    }
+    setInterval(post,3000)
+</script>
+</body>
+</html>
