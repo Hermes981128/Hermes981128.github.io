@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>遇见彩虹</title>
     <link rel="shortcut icon" href="./static/favicon.ico">
     <link rel="stylesheet" href="./templates/css/basis.css">
-
     <style>
         body {
             background-image: url('./static/leimu.png');
@@ -16,8 +15,26 @@
         }
     </style>
 </head>
-<body >
+<body>
 
     <h1 style="text-align: center">个人小站</h1>
+    <div>
+        <p class='motto' style="text-align: center">Some of us get dipped in flat, some in satin, some in gloss. But every
+        once in a while, you find someone who's iridescent, and when you do, nothing will ever compare.
+        </p>
+    </div>
+    <div id="current_time" style="text-align: center"></div>
+    <script>
+        function add0(m) {
+            return m<10?'0'+m:m
+        }
+        let current_time = new Date()
+        document.getElementById('current_time').innerText = current_time.getFullYear() + '年' + current_time.getMonth() + '月' + current_time.getDay() + '日' + '\n' + add0(current_time.getHours()) + ':' + add0(current_time.getMinutes()) + ':' + add0(current_time.getSeconds())
+        setInterval(function () {
+            let current_time = new Date()
+            document.getElementById('current_time').innerText = current_time.getFullYear() + '年' + current_time.getMonth() + '月' + current_time.getDay() + '日' + '\n' + add0(current_time.getHours()) + ':' + add0(current_time.getMinutes()) + ':' + add0(current_time.getSeconds())
+        }, 1000)
+    </script>
+    <hr style="align-self: center;width: 400px">        <!--水平线 -->
 </body>
 </html>
