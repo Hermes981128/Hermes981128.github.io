@@ -1,0 +1,21 @@
+baseURL: https://meetrainbow.eu.org/
+languageCode: zh-CN
+title: 彩云归
+theme: hugo-theme-stack
+defaultContentLanguage: zh-cn
+paginate: 5 # 随意翻阅
+params:
+  favicon: favicon.ico
+
+  sidebar:
+    emoji: 🌈
+    subtitle: 当时明月在，曾照彩云归
+    avatar:
+      enabled: true
+      local: true
+      src: rainbow.png
+  article:
+    readingTime: true
+    license:
+      enabled: true
+      default: Licensed under CC BY-NC-SA 4.0
