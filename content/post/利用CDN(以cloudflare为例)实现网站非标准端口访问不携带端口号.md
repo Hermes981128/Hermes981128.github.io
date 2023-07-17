@@ -1,6 +1,11 @@
 ---
 title: "利用CDN(以cloudflare为例)实现网站非标准端口访问不携带端口号"
 date: 2023-07-17T16:26:01+08:00
+tags:
+  - cloudflare
+  - CDN
+categories:
+  - 网站
 ---
 
 # 利用CDN(以cloudflare为例)实现网站非标准端口访问不携带端口号
