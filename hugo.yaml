@@ -1,12 +1,13 @@
-baseURL: https://meetrainbow.eu.org/
+baseURL: https://meetrainbow.live/
 languageCode: zh-CN
 title: 彩云归
 theme: hugo-theme-stack
 defaultContentLanguage: zh-cn
 paginate: 5 # 随意翻阅
 params:
+  mainSections:
+    - post
   favicon: favicon.ico
-
   sidebar:
     emoji: 🌈
     subtitle: 当时明月在，曾照彩云归
