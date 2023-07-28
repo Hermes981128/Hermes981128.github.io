@@ -5,7 +5,7 @@ tags:
   - cloudflare
   - CDN
 categories:
-  - 网站
+  - web
 ---
 
 # 利用CDN(以cloudflare为例)实现网站非标准端口访问不携带端口号

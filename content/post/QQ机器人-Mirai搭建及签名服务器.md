@@ -2,9 +2,9 @@
 title: "QQ机器人 Mirai 搭建及签名服务器"
 date: 2023-07-26T23:49:32+08:00
 tags:
-  - default
+  - tool
 categories:
-  - default
+  - tool
 ---
 >本文将简单介绍在Linux平台如何基于mirai搭建 QQ 机器人 以及当前必须的签名服务器
 > 
