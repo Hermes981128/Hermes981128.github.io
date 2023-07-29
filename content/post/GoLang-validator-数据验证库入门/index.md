@@ -2,9 +2,9 @@
 title: "GoLang Validator 数据验证库入门"
 date: 2023-07-29T21:16:14+08:00
 tags:
-  - default
+  - golang
 categories:
-  - default
+  - golang
 ---
 > validator 开源仓库地址：https://github.com/go-playground/validator
 > 
