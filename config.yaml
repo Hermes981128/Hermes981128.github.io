@@ -13,7 +13,7 @@ paginate: 5 # 随意翻阅
 
 params:
   description: "彩云归"
-  mainSections: [ "post" ]
+  mainSections: [ "post", "journal" ]
   featuredImageField: "featured_image"
   favicon: /favicon.ico
   darkmode: true
@@ -32,6 +32,7 @@ params:
     license:
       enabled: true
       default: Licensed under CC BY-NC-SA 4.0
+    toc: true
   widgets:
     homepage:
       - type: search
@@ -46,6 +47,13 @@ params:
       enabled: true
     content:
       enabled: true
+  comments:
+    enabled: true
+    provider: utterances
+    utterances:
+      repo: Hermes981128/Hermes981128.github.io
+      issueTerm: pathname
+      label: comment
 
 
 menu:

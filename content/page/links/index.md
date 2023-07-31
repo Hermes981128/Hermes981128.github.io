@@ -1,5 +1,5 @@
 ---
-title: Links
+title: 链接
 links:
   - title: GitHub
     description: My GitHub

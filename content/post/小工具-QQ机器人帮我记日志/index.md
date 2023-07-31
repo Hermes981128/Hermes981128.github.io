@@ -142,6 +142,129 @@ func GetConfig() *ConfigStruct {
 	return config
 }
 ```
+### logger.go
+```go
+package base
+
+import (
+	"github.com/sirupsen/logrus"
+	"io"
+	"os"
+)
+
+var (
+	logger     = logrus.New()
+	loggerFile *os.File
+)
+
+func initLog() {
+	// 判断 log 文件夹是否存在 如果不存在则创建
+	if _, err := os.Stat("log"); os.IsNotExist(err) {
+		err := os.Mkdir("log", os.ModePerm)
+		if err != nil {
+			panic(err)
+		}
+	}
+	// 打开 log 文件
+	var err error
+	loggerFile, err = os.OpenFile("log/app.log", os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
+	if err != nil {
+		logger.Println("打开 log 文件失败:" + err.Error())
+	}
+	// 设置 log 输出 为标准输出和文件输出
+	if config.EnableLog {
+		logger.SetOutput(io.MultiWriter(os.Stdout, loggerFile))
+	} else {
+		logger.SetOutput(os.Stdout)
+	}
+	logger.SetFormatter(&logrus.TextFormatter{
+		DisableColors: true,
+		FullTimestamp: true,
+	})
+	logger.SetReportCaller(true)
+	logger.SetLevel(logrus.Level(config.LogLevel))
+}
+
+func GetLogger() *logrus.Logger {
+	return logger
+}
+```
+### validate.go
+```go
+package base
+
+import (
+	"github.com/go-playground/locales/zh"
+	ut "github.com/go-playground/universal-translator"
+	"github.com/go-playground/validator/v10"
+	zhTranslation "github.com/go-playground/validator/v10/translations/zh"
+	"reflect"
+	"strings"
+)
+
+var (
+	trans    ut.Translator
+	validate *validator.Validate
+)
+
+func initTranslate() {
+	//初始化错误翻译器
+	trans, _ = ut.New(zh.New()).GetTranslator("zh")
+	validate = validator.New()
+	//使用fld.Tag.Get("comment")注册一个获取tag的自定义方法以实现翻译Field
+	validate.RegisterTagNameFunc(func(fld reflect.StructField) string {
+		return fld.Tag.Get("tag")
+	})
+	_ = validate.RegisterTranslation("isdefault", trans, func(ut ut.Translator) error {
+		return ut.Add("isdefault", "{0}应当为默认值", true)
+	}, func(ut ut.Translator, fe validator.FieldError) string {
+		t, _ := ut.T("isdefault", fe.Field())
+		return t
+	})
+
+	err := zhTranslation.RegisterDefaultTranslations(validate, trans)
+	if err != nil {
+		logger.Error("注册错误翻译器失败：" + err.Error())
+	}
+
+	logger.Info("注册错误翻译器成功")
+}
+func GetValidate() *validator.Validate {
+	if validate == nil {
+		initTranslate()
+	}
+	return validate
+}
+
+func GetTrans() ut.Translator {
+	return trans
+}
+
+// 解析错误信息
+func ParseError(err error) string {
+	switch err.(type) {
+	case nil:
+		return ""
+	case validator.ValidationErrors:
+		println("ValidationErrors")
+		err := err.(validator.ValidationErrors)
+		var errMses []string
+		for _, e := range err.Translate(trans) {
+			errMses = append(errMses, e)
+		}
+		return strings.Join(errMses, "\r\n")
+	default:
+		errInfo := err.Error()
+		switch {
+		default:
+			return errInfo
+		}
+	}
+}
+```
+
+
+
 ###  init.go
 `原计划有多个初始化函数，但是后来懒了，所以就这样吧`
 ```go
@@ -149,6 +272,8 @@ package base
 
 func init() {
 	initConfig()
+    initLog()
+	initTranslate()
 	checkConfig()
 }
 ```
@@ -203,7 +328,7 @@ func (bot *Bot) ConnectServer(path string) *websocket.Conn {
 }
 ```
 ### main.go
-```yaml
+```go
 package main
 
 import (
